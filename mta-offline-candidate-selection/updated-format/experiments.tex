@@ -1,0 +1,170 @@
+
+\section{Experiments}
+In this section, we describe the experimental results using the proposed query
+construction techniques. We used the techniques to run on two separate products
+- job search and recommendations. We present the effectiveness in latency
+reduction as well as quality. 
+
+\subsection{Experimental Setup}
+As mentioned in Section~[\ref{sec:system-architecture}], our underlying
+retrieval is powered by an inverted index. We have two separate indices for
+both job search and recommendations. The data required to train our models is
+stored in HDFS. Our training pipeline is written using a combination of tools
+including Apache Spark~\cite{meng2016mllib} and Photon~\cite{XianXing2016}. 
+
+Our entire experimentation process consists of the following steps:
+\begin{enumerate}
+        \item Come up with query construction using techniques described
+            earlier
+        \item Measure impact offline using the replay framework
+        \item Launch it online for a small percentage of population
+        \item Retrain underlying ranking model using the results from new query
+            construction
+        \item Launch model online with new query construction and retrained
+            ranking model
+\end{enumerate}
+
+We had two types of experiments - offline and online. Offline experimentation
+uses the framework described in Section~\ref{sec:replay-framework}. In this
+framework, we have ways to run a representative sample of production queries
+through the new and old query construction. 
+All
+online experiments were conducted using LinkedIn's A/B testing 
+framework~\cite{xu2015infrastructure}.
+
+Retraining the underlying ranking models is done via our model training flow
+details about which can be found in~\cite{zhang2016glmix} and~\cite{liget} for
+jobs recommendations and search respectively. We use user actions to infer
+labels in our models. These include:
+\begin{itemize}
+        \item Job clicks
+        \item Job applies (typically stronger intent)
+        \item Job dismisses. Our UI allows a user to dismiss a job from our
+            jobs home page. This is generally signal for poor match
+\end{itemize}
+
+%Job search has a separate model and feature sets. In the presence of an
+%explicit user query, we could build query to document features as well as
+%features based on query understanding. We infer labels from user actions and
+%use coordinate ascent to optimize a listwise ranking function~\cite{metzler2007linear}. 
+
+\subsection{Jobs Recommendations}
+
+
+Offline replay framework was used to sample a set of queries from the query
+log and ran it through two different systems - one that uses old query
+formulation and another one that uses the new proposed technique. 
+We use the framework to train the decision trees as described in Section 5.  
+
+For jobs recommendations, we use above labels inferred from member activities 
+to build a deeply personalized
+model. The objective of the model is to predict if a member $m$ will apply for
+a job $j$ in context $t$. Let $q_m$ and $s_j$ denote the feature vector 
+extracted from the member profile $m$ and job $j$ respectively. Let $x_{mjt}$
+represent the overall feature vector for the the $(m, j, t)$ tuple. We use
+logistic regression to predict the likelihood of member applying to job by:
+\begin{equation} \label{eqn:glmix}
+    g(E[y_{mjt}]) = x^{T}b + s^{T}_{j}\alpha_{m} + q^{T}_{m}\beta_{j}
+\end{equation}
+In the above equation:
+\begin{itemize}
+        \item $g(x) = log\frac{x}{1-x}$.
+        \item  $b$ represents the global coefficient vector or simple the {\it
+            global model}.
+        \item $\alpha_m$ and $\beta_j$ are the coefficient vectors of member
+            $m$ and job $j$ respectively. These coefficients are also called as
+            random effects coefficients and enable deep personalization.
+
+\end{itemize}
+The details of the ranking model can be found in~\cite{zhang2016glmix}. Once we
+obtain a decision tree, we retrain the model from activity data obtained from
+the new model. This process is critical for both search and recommendations. We
+have noticed that changing query formulation often requires us to retrain the
+underlying ranking model. Note that we haven't changed anything in the ranking
+model, but only retrained it using new data.
+
+The main goal of the work is to reduce latency. Within latency, we
+measure average, p95 (which represents the worst 5\% of queries) and p99 (worst
+1\% of queries). Operational requirements are dictated more via the worst
+queries than average case and hence the need to measure p95/p99
+
+Table~[\ref{tab:jymbii-latency}] gives the p99 latency reduction while running
+our decision tree based approach. The baseline approach we used was also a
+machine learned algorithm described in~\cite{borisyuk2016casmos}.
+As seen from the table, we notice significant reduction in latencies across the
+spectrum. Note that these numbers were obtained by A/B testing online with a
+sample of users directed to the new query construction techniques. These are
+true latencies measured in our back-end servers. Of particular interest in the
+performance on the worst 1\% of the queries where we reduced latency by over
+55\%. Average latencies were down by 35.6\%.
+
+While we did not explicitly target quality metrics (like job applications), we
+did see a non-trivial impact on applies. We saw {\bf 3.5\%} increase in applies
+while testing our query construction model in production. The improvement was
+mainly a result of reduced timeouts from our callers like 
+LinkedIn feed~\cite{agarwal2015personalizing} which have very tight latency
+constraints.
+
+\begin{table*}
+\centering
+\caption{Impact of Query Construction on Jobs Recommendations Latency}
+\begin{tabular}{|l|l|l|l|} \hline
+Metric&Baseline&Decision Trees&Percentage Difference \\ \hline
+Average Latency& 37.67 ms&24.26  ms& \bf{-35.6\%} \\ \hline
+p95 latency& 163.2 ms& 109.9 ms& \bf{-48.49\%} \\ \hline
+p99 latency& 562.4 ms&247.7  ms& \bf{-55.96\%} \\ \hline
+\end{tabular}
+\label{tab:jymbii-latency}
+\end{table*}
+
+\subsection{Job Search Experiments}
+
+As with jobs recommendations, we employed the same query construction framework
+with job search. Search also has an explicit query and facets from the user
+which have to be incorporated as part of the query. For example, if a user
+query is {\it ``marketing''} we could rewrite the query as:
+
+\lucenequery{+(?TITLE:marketing ?SKILL:marketing)}
+
+The above query may still be broad. Suppose we know from the user's profile and
+activities that the user is only interested in jobs from San Francisco,
+California (represented as $SF-CA-USA$), we could rewrite the query as:
+
+\lucenequery{+(?TITLE:marketing ?SKILL:marketing) +GEO:SF-CA-USA}
+
+Such query rewriting reduces the number of documents ranked while maintaining
+the precision. The underlying ranking model optimizes NDCG@K using inferred
+labels from member activities~\cite{liget}. We perform top K randomization for
+a very small percentage of production traffic. This randomization takes care of
+position bias. The process followed then is similar to that of recommendations.
+We run the constructed query through small sample of production traffic,
+collect unbiased data, retrain the ranking model and put it back in production
+for A/B testing. Presence of query also implies that we could find the the user
+intent based on the query. We use proprietary query tagger developer at
+LinekdIn. This is a machine learned sequence prediction model, details about
+which are beyond the scope of current paper. Interested reader may refer to~\cite{ashaolu2014query}  
+for general details about this area. Query tagger helps in rewriting the query
+using the FLEX operators described in section~\cite{ref:wand}. We also order
+the index using static rank which compute document prior independent of query
+and user. We use variety of signals towards static rank including job posting
+date, company popularity, job popularity etc.
+
+
+Table~[\ref{tab:jobsearch-latency}] gives the latency reduction in job search
+while deploying our query construction techniques. Unlike recommendations, 
+job search has an explicit query which by itself can reduce the number of documents ranked.
+However we do see some broad queries which can have very long latency. 
+Hence the impact of the changes on p99 were much more pronounced. p99 went down
+by {\bf 67.72\%}. 
+
+\begin{table*}
+\centering
+\caption{Impact of Query Construction on Job Search Latency}
+\begin{tabular}{|l|l|l|l|} \hline
+Metric&Baseline&Decision Trees&Percentage Difference \\ \hline
+Average Latency& 108.0 ms& 101.0  ms& \bf{-6.48\%} \\ \hline
+p95 latency& 629 ms& 214  ms& \bf{-34.55\%} \\ \hline
+p99 latency& 1921 ms&620  ms& \bf{-67.72\%} \\ \hline
+\end{tabular}
+\label{tab:jobsearch-latency}
+\end{table*}

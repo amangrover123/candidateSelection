@@ -1,0 +1,133 @@
+\begin{thebibliography}{10}
+
+\bibitem{agarwal2015personalizing}
+D.~Agarwal, B.-C. Chen, Q.~He, Z.~Hua, G.~Lebanon, Y.~Ma, P.~Shivaswamy, H.-P.
+  Tseng, J.~Yang, and L.~Zhang.
+\newblock Personalizing linkedin feed.
+\newblock In {\em Proceedings of the 21th ACM SIGKDD International Conference
+  on Knowledge Discovery and Data Mining}, pages 1651--1660. ACM, 2015.
+
+\bibitem{agarwal2012fast}
+D.~Agarwal and M.~Gurevich.
+\newblock Fast top-k retrieval for model based recommendation.
+\newblock In {\em Proceedings of the fifth ACM international conference on Web
+  search and data mining}, pages 483--492. ACM, 2012.
+
+\bibitem{anh2001vector}
+V.~N. Anh, O.~de~Kretser, and A.~Moffat.
+\newblock Vector-space ranking with effective early termination.
+\newblock In {\em Proceedings of the 24th annual international ACM SIGIR
+  conference on Research and development in information retrieval}, pages
+  35--42. ACM, 2001.
+
+\bibitem{aphi2004learning}
+Y.~Aphinyanaphongs and C.~Aliferis.
+\newblock Learning boolean queries for article quality filtering.
+\newblock {\em Medinfo}, 11(1):263--267, 2004.
+
+\bibitem{borisyuk2016casmos}
+F.~Borisyuk, K.~Kenthapadi, D.~Stein, and B.~Zhao.
+\newblock Casmos: A framework for learning candidate selection models over
+  structured queries and documents.
+\newblock In {\em Proceedings of the 22nd ACM SIGKDD International Conference
+  on Knowledge Discovery and Data Mining}, pages 441--450. ACM, 2016.
+
+\bibitem{brin2007anatomy}
+S.~Brin and L.~Page.
+\newblock The anatomy of a large-scale hypertextual web search engine, 1998.
+\newblock In {\em Proceedings of the Seventh World Wide Web Conference}, 2007.
+
+\bibitem{broder2003efficient}
+A.~Z. Broder, D.~Carmel, M.~Herscovici, A.~Soffer, and J.~Zien.
+\newblock Efficient query evaluation using a two-level retrieval process.
+\newblock In {\em Proceedings of the twelfth international conference on
+  Information and knowledge management}, pages 426--434. ACM, 2003.
+
+\bibitem{covington2016deep}
+P.~Covington, J.~Adams, and E.~Sargin.
+\newblock Deep neural networks for youtube recommendations.
+\newblock In {\em Proceedings of the 10th ACM Conference on Recommender
+  Systems}, pages 191--198. ACM, 2016.
+
+\bibitem{goel2009predictive}
+S.~Goel, J.~Langford, and A.~L. Strehl.
+\newblock Predictive indexing for fast search.
+\newblock In {\em Advances in neural information processing systems}, pages
+  505--512, 2009.
+
+\bibitem{liget}
+J.~Li, D.~Arya, V.~Ha-Thuc, and S.~Sinha.
+\newblock How to get them a dream job?
+
+\bibitem{liu2009learning}
+T.-Y. Liu.
+\newblock Learning to rank for information retrieval.
+\newblock {\em Foundations and Trends in Information Retrieval}, 3(3):225--331,
+  2009.
+
+\bibitem{mccandless2010lucene}
+M.~McCandless, E.~Hatcher, and O.~Gospodnetic.
+\newblock {\em Lucene in Action: Covers Apache Lucene 3.0}.
+\newblock Manning Publications Co., 2010.
+
+\bibitem{meng2016mllib}
+X.~Meng, J.~Bradley, B.~Yavuz, E.~Sparks, S.~Venkataraman, D.~Liu, J.~Freeman,
+  D.~Tsai, M.~Amde, S.~Owen, et~al.
+\newblock Mllib: Machine learning in apache spark.
+\newblock {\em Journal of Machine Learning Research}, 17(34):1--7, 2016.
+
+\bibitem{persin1996filtered}
+M.~Persin, J.~Zobel, and R.~Sacks-Davis.
+\newblock Filtered document retrieval with frequency-sorted indexes.
+\newblock {\em JASIS}, 47(10):749--764, 1996.
+
+\bibitem{sriram2014}
+S.~Sankar.
+\newblock Did you mean
+  "galene",https://engineering.linkedin.com/search/did-you-mean-galene.
+\newblock 2014.
+
+\bibitem{white2012hadoop}
+T.~White.
+\newblock {\em Hadoop: The definitive guide}.
+\newblock " O'Reilly Media, Inc.", 2012.
+
+\bibitem{xia2008listwise}
+F.~Xia, T.-Y. Liu, J.~Wang, W.~Zhang, and H.~Li.
+\newblock Listwise approach to learning to rank: theory and algorithm.
+\newblock In {\em Proceedings of the 25th international conference on Machine
+  learning}, pages 1192--1199. ACM, 2008.
+
+\bibitem{xu2015infrastructure}
+Y.~Xu, N.~Chen, A.~Fernandez, O.~Sinno, and A.~Bhasin.
+\newblock From infrastructure to culture: A/b testing challenges in large scale
+  social networks.
+\newblock In {\em Proceedings of the 21th ACM SIGKDD International Conference
+  on Knowledge Discovery and Data Mining}, pages 2227--2236. ACM, 2015.
+
+\bibitem{yan2010efficient}
+H.~Yan, S.~Shi, F.~Zhang, T.~Suel, and J.-R. Wen.
+\newblock Efficient term proximity search with term-pair indexes.
+\newblock In {\em Proceedings of the 19th ACM international conference on
+  Information and knowledge management}, pages 1229--1238. ACM, 2010.
+
+\bibitem{zhang2010revisiting}
+F.~Zhang, S.~Shi, H.~Yan, and J.-R. Wen.
+\newblock Revisiting globally sorted indexes for efficient document retrieval.
+\newblock In {\em Proceedings of the third ACM international conference on Web
+  search and data mining}, pages 371--380. ACM, 2010.
+
+\bibitem{XianXing2016}
+X.~Zhang, D.~Agarwal, B.-C. Chen, and P.~Ogilvie.
+\newblock Building recommender systems using photon ml.
+\newblock In {\em Proceedings of the 22th ACM SIGKDD International Conference
+  on Knowledge Discovery and Data Mining}. ACM, 2016.
+
+\bibitem{zhang2016glmix}
+X.~Zhang, Y.~Zhou, Y.~Ma, B.-C. Chen, L.~Zhang, and D.~Agarwal.
+\newblock Glmix: Generalized linear mixed models for large-scale response
+  prediction.
+\newblock In {\em Proceedings of the 22nd ACM SIGKDD International Conference
+  on Knowledge Discovery and Data Mining}, pages 363--372. ACM, 2016.
+
+\end{thebibliography}

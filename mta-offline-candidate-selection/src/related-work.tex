@@ -1,0 +1,62 @@
+\section{Related Work}
+Query formulation is a well studied area in Information Retrieval (IR). For
+most part, query optimization deals with reducing latency. It also enables use
+of more complex/time consuming ranker with fewer number of documents. 
+~\cite{broder2003efficient} formally introduces the concept of a WAND (weighted AND) operator which has since
+then been extensively used in large scale search systems including LinkedIn.
+The WAND operator requires weights and ~\cite{broder2003efficient} proposes
+tf-idf based heuristics to tune those weights. Search systems organized in
+terms of inverted index ~\cite{goel2009predictive}. For inverted index based
+search systems, a common technique used to speed up retrieval is the use of
+early termination~\cite{anh2001vector,yan2010efficient,zhang2010revisiting}.
+Use of early termination requires that the posting list 
+is ordered in such a way that the highest quality document is
+placed first. Note that this quality is dependent only on the document and not
+the query or the user. This score computed on a per document basis is often
+referred to as ``static rank''. 
+Various techniques used for computing suitable
+static rank include term frequencies~\cite{persin1996filtered} or the more
+popular pagerank~\cite{brin2007anatomy}.
+Commonly used scores include within-document term frequencies~\cite{persin1996filtered},
+or some notion of document quality or popularity~\cite{brin2007anatomy}.
+
+~\cite{agarwal2012fast} proposes a two pass approach to ranking. The first pass
+retrieves the top-k documents using approximate ranking. The second pass uses a
+more accurate model. The document and items are represented in a vector space.
+The first state ranking leverages this vector space representation to retrieve
+a limited set of documents. This gives more time for the second pass to work on
+a more accurate model. 
+More recently~\cite{covington2016deep} propose a neural network based candidate
+selection for YouTube recommendations. In this work, the authors reduce the
+number of videos to be ranked to a few hunderds by converting the
+recommendation problem into an extreme multiclass classification problem. A
+high dimensional embedding of each document and item (in this case user and videos) 
+is learned using neural networks. A nearest neighbor search is executed in real
+time in this high dimensional space to retrieve the top N documents.
+~\cite{aphi2004learning} propose a way to learn Boolean queries in
+such a way that they are manageable by humans. Such queries are then used as
+filters. 
+
+The work closest to our existing work ~\cite{borisyuk2016casmos} proposes a
+framework to prune irrelevant documents and retrieve documents that are likely
+to be in the top-k results of the query. This is done by training a constrained
+feature selection algorithm to learn positive weights for feature combinations
+of the weighted candidate query. Our approach while using the same retrieval
+engine differs in the following aspects:
+\begin{enumerate}
+        \item We propose a decision tree based framework to come up directly
+            with query clauses. 
+        \item We propose an offline replay framework which accurately estimates
+            the differences between constrained query formulation vs retrieving
+            all documents. ~\cite{borisyuk2016casmos} uses AUC as evaluation.
+            AUC is a classification metric while the underlying problem we are
+            trying to model is a ranking problem. Pointwise metrics (like AUC)
+            are shown to be less accurate~\cite{xia2008listwise,
+            liu2009learning}. Since our replay framework models production
+            queries on a production index, it reduces the number of iterations
+            needed for online A/B testing.
+        \item ~\cite{borisyuk2016casmos} does not make use of retrieval
+            operators like early termination and suitable static rank. Getting
+            a good representative static rank can reduce the latency
+            significantly.
+\end{enumerate}

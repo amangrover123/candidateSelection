@@ -1,0 +1,334 @@
+% This is "sig-alternate.tex" V2.1 April 2013
+% This file should be compiled with V2.5 of "sig-alternate.cls" May 2012
+%
+% This example file demonstrates the use of the 'sig-alternate.cls'
+% V2.5 LaTeX2e document class file. It is for those submitting
+% articles to ACM Conference Proceedings WHO DO NOT WISH TO
+% STRICTLY ADHERE TO THE SIGS (PUBS-BOARD-ENDORSED) STYLE.
+% The 'sig-alternate.cls' file will produce a similar-looking,
+% albeit, 'tighter' paper resulting in, invariably, fewer pages.
+%
+% ----------------------------------------------------------------------------------------------------------------
+% This .tex file (and associated .cls V2.5) produces:
+%       1) The Permission Statement
+%       2) The Conference (location) Info information
+%       3) The Copyright Line with ACM data
+%       4) NO page numbers
+%
+% as against the acm_proc_article-sp.cls file which
+% DOES NOT produce 1) thru' 3) above.
+%
+% Using 'sig-alternate.cls' you have control, however, from within
+% the source .tex file, over both the CopyrightYear
+% (defaulted to 200X) and the ACM Copyright Data
+% (defaulted to X-XXXXX-XX-X/XX/XX).
+% e.g.
+% \CopyrightYear{2007} will cause 2007 to appear in the copyright line.
+% \crdata{0-12345-67-8/90/12} will cause 0-12345-67-8/90/12 to appear in the copyright line.
+%
+% ---------------------------------------------------------------------------------------------------------------
+% This .tex source is an example which *does* use
+% the .bib file (from which the .bbl file % is produced).
+% REMEMBER HOWEVER: After having produced the .bbl file,
+% and prior to final submission, you *NEED* to 'insert'
+% your .bbl file into your source .tex file so as to provide
+% ONE 'self-contained' source file.
+%
+% ================= IF YOU HAVE QUESTIONS =======================
+% Questions regarding the SIGS styles, SIGS policies and
+% procedures, Conferences etc. should be sent to
+% Adrienne Griscti (griscti@acm.org)
+%
+% Technical questions _only_ to
+% Gerald Murray (murray@hq.acm.org)
+% ===============================================================
+%
+% For tracking purposes - this is V2.0 - May 2012
+
+\documentclass{sig-alternate-05-2015}
+
+\usepackage{xcolor}
+\usepackage{amsmath}
+\usepackage{algorithm}
+\usepackage[noend]{algpseudocode}
+\makeatletter
+\def\BState{\State\hskip-\ALG@thistlm}
+\makeatother
+
+\newcommand\TODO[1]{\textcolor{red}{#1}}
+\newcommand{\lucenequery}[1]{\vspace{1mm}\texttt{#1}\vspace{1mm}}
+
+\begin{document}
+
+% Copyright
+\setcopyright{acmcopyright}
+%\setcopyright{acmlicensed}
+%\setcopyright{rightsretained}
+%\setcopyright{usgov}
+%\setcopyright{usgovmixed}
+%\setcopyright{cagov}
+%\setcopyright{cagovmixed}
+
+
+% DOI
+\doi{10.475/123_4}
+
+% ISBN
+\isbn{123-4567-24-567/08/06}
+
+%Conference
+\conferenceinfo{PLDI '13}{June 16--19, 2013, Seattle, WA, USA}
+
+\acmPrice{\$15.00}
+
+%
+% --- Author Metadata here ---
+\conferenceinfo{KDD}{'17 Halifax, Nova Scotia, Canada}
+%\CopyrightYear{2007} % Allows default copyright year (20XX) to be over-ridden - IF NEED BE.
+%\crdata{0-12345-67-8/90/01}  % Allows default copyright data (0-89791-88-6/97/05) to be over-ridden - IF NEED BE.
+% --- End of Author Metadata ---
+
+\title{Latency Reduction via Decision Tree Based Query Construction}
+% You need the command \numberofauthors to handle the 'placement
+% and alignment' of the authors beneath the title.
+%
+% For aesthetic reasons, we recommend 'three authors at a time'
+% i.e. three 'name/affiliation blocks' be placed beneath the title.
+%
+% NOTE: You are NOT restricted in how many 'rows' of
+% "name/affiliations" may appear. We just ask that you restrict
+% the number of 'columns' to three.
+%
+% Because of the available 'opening page real-estate'
+% we ask you to refrain from putting more than six authors
+% (two rows with three columns) beneath the article title.
+% More than six makes the first-page appear very cluttered indeed.
+%
+% Use the \alignauthor commands to handle the names
+% and affiliations for an 'aesthetic maximum' of six authors.
+% Add names, affiliations, addresses for
+% the seventh etc. author(s) as the argument for the
+% \additionalauthors command.
+% These 'additional authors' will be output/set for you
+% without further effort on your part as the last section in
+% the body of your article BEFORE References or any Appendices.
+\numberofauthors{1} 
+\author{
+\alignauthor Aman Grover, Dhruv Arya, Ganesh Venkataraman \\
+\affaddr{LinkedIn Corporation} \\ \affaddr{Sunnyvale, CA, USA} \\
+\email{\{agrover,darya,ghvenkat\}@linkedin.com}
+}
+% There's nothing stopping you putting the seventh, eighth, etc.
+% author on the opening page (as the 'third row') but we ask,
+% for aesthetic reasons that you place these 'additional authors'
+% in the \additional authors block, viz.
+\additionalauthors{Additional authors: John Smith (The Th{\o}rv{\"a}ld Group,
+email: {\texttt{jsmith@affiliation.org}}) and Julius P.~Kumquat
+(The Kumquat Consortium, email: {\texttt{jpkumquat@consortium.net}}).}
+\date{30 July 1999}
+
+% Just remember to make sure that the TOTAL number of authors
+% is the number that will appear on the first page PLUS the
+% number that will appear in the \additionalauthors section.
+
+\maketitle
+\begin{abstract}
+LinkedIn as a professional network serves the career needs of 450 Million plus members. 
+The task of job recommendation system is to find the suitable job among a corpus of several million jobs and serve this in real time under tight latency constraints. 
+Job search involves finding suitable job listings given a user, query and
+context.  Typical scoring function for both search and recommendations 
+involves evaluating a function that matches various fields in the job description 
+with various fields in the member profile.
+This in turn translates to evaluating a function with several thousands of features to get the right ranking. 
+In recommendations, evaluating all the jobs in the corpus for all members is not possible given the latency constraints. 
+On the other hand, reducing the candidate set could 
+potentially involve loss of relevant jobs. 
+This work provides a novel way of improving the candidate jobs for the job seeker without hurting the overall relevance of the product. 
+We propose a novel way to model the underlying complex ranking function with a
+decision tree. The variable within the branching of the decision tree would be
+candidate query clauses. We developed an offline framework which
+evaluates the quality of the decision tree with respect to latency and recall.
+We tested the approach on job search and recommendations on LinkedIn and A/B tests show significant improvements in member engagement and latency. 
+Our techniques helped reduce job search latency by over {\bf 67\%} and our
+recommendations latency by over {\bf 55\%}.
+{\bf As of writing the approach powers all of job search and recommendations on LinkedIn.} 
+
+\end{abstract}
+
+%
+% The code below should be generated by the tool at
+% http://dl.acm.org/ccs.cfm
+% Please copy and paste the code instead of the example below. 
+%
+\begin{CCSXML}
+<ccs2012>
+ <concept>
+  <concept_id>10010520.10010553.10010562</concept_id>
+  <concept_desc>Information retrieval~Document filtering</concept_desc>
+  <concept_desc>Recommender Systems~Query Reformulation</concept_desc>
+  <concept_desc>Machine Learning~Decision Trees</concept_desc>
+  <concept_significance>500</concept_significance>
+ </concept>
+ <concept>
+  <concept_id>10010520.10010575.10010755</concept_id>
+  <concept_desc>Computer systems organization~Redundancy</concept_desc>
+  <concept_significance>300</concept_significance>
+ </concept>
+ <concept>
+  <concept_id>10010520.10010553.10010554</concept_id>
+  <concept_desc>Computer systems organization~Robotics</concept_desc>
+  <concept_significance>100</concept_significance>
+ </concept>
+ <concept>
+  <concept_id>10003033.10003083.10003095</concept_id>
+  <concept_desc>Networks~Network reliability</concept_desc>
+  <concept_significance>100</concept_significance>
+ </concept>
+</ccs2012>  
+\end{CCSXML}
+
+\ccsdesc[500]{Computer systems organization~Embedded systems}
+\ccsdesc[300]{Computer systems organization~Redundancy}
+\ccsdesc{Computer systems organization~Robotics}
+\ccsdesc[100]{Networks~Network reliability}
+
+
+%
+% End generated code
+%
+
+%
+%  Use this command to print the description
+%
+\printccsdesc
+
+% We no longer use \terms command
+%\terms{Theory}
+
+\keywords{Information Retrieval, Personalized Search, Recommender Systems}
+
+
+% end the environment with {table*}, NOTE not {table}!
+\input{introduction.tex}
+\input{related-work.tex}
+
+
+\section{Problem Formulation}
+Let
+\begin{itemize}
+    \item $EQ$ represent the explicit user query. In search $EQ$ represents the
+        search term and in recommendations $EQ$ is empty.
+    \item $U$ represent set of user attributes in the profile. Example -
+        current company, current title etc.
+    \item $C$ represent the context. This may include past job searches,
+        job applies, jobs views etc.
+    \item $D(q)$ represents the set of document retrieved from inverted index
+        for a given query $q$. $|D(q)|$ represents it's cardinality.
+    %\item $M$ represent the set of all documents that match the users explicit
+    %    query $EQ$. In recommender systems, $M$
+    %    could include all documents in the index. In search, it could be more
+    %    restrictive in the presence of an explicit query.
+    \item $k$ represent the top documents required to be shown to the user and
+        $M$ represent the total number of documents that match the query.
+        Typically $k << |M|$.
+    \item $R_f(d, k)$ represent the underlying ranking function which generates
+        top k documents from document set $d$.  
+
+\end{itemize}
+The ranking function takes a (user, query, document) tuple and converts it into a score. Our
+ranking function is highly personalized using per member and per job
+coefficients. This work doesn't touch the ranking function but modifies the query. 
+Interested reader may refer to ~\cite{zhang2016glmix} for more details. The
+objective of this work is to come up with a constructed query $CQ$
+number of documents retrieved is minimized while the top $k$ documents are not
+lost due to restricted query construction. More formally:
+
+\begin{equation} \label{eq:problem-formulation}
+    \begin{aligned}
+        \textrm{Given} \quad R_f \\
+    CQ = g(U, EQ, C) \\
+        \textrm{minimize} \quad |D(CQ)| \\
+        s. t. \quad  R_f(D(CQ), k) = R_f(D(EQ), k)
+    \end{aligned}
+\end{equation}
+
+Assume that we need the top 25 jobs and explicit query matched 1 Million jobs.
+This implies that we need to rank 1 Million jobs without query construction.
+Suppose the constructed query matches 10K jobs, as long as the top 25 jobs are
+still part of the 10K retrieved jobs, we are have no loss of recall and
+significant reduction in latency.
+We come up with a decision tree based technique which will automatically learn
+the function $g$ to construct the query while trying to optimize the problem
+stated in equation~\ref{eq:problem-formulation}.
+
+
+\input{system-architecture.tex}
+
+\begin{figure}
+\includegraphics[width=\linewidth,height=\textheight,keepaspectratio]{offline-indexing.png}
+\caption{Offline Indexing}
+\label{fig:offline-indexing}
+\end{figure}
+
+
+
+
+\input{decision-trees2.tex}
+
+\input{experiments.tex}
+\input{deployment-lessons.tex}
+\input{conclusions.tex}
+
+%\end{document}  % This is where a 'short' article might terminate
+
+%
+% The following two commands are all you need in the
+% initial runs of your .tex file to
+% produce the bibliography for the citations in your paper.
+\bibliographystyle{abbrv}
+\bibliography{sigproc}  % sigproc.bib is the name of the Bibliography in this case
+% You must have a proper ".bib" file
+%  and remember to run:
+% latex bibtex latex latex
+% to resolve all references
+%
+% ACM needs 'a single self-contained file'!
+%
+%APPENDICES are optional
+%\balancecolumns
+% This next section command marks the start of
+% Appendix B, and does not continue the present hierarchy
+%\balancecolumns % GM June 2007
+% That's all folks!
+% This is "sig-alternate.tex" V2.1 April 2013
+% This file should be compiled with V2.5 of "sig-alternate.cls" May 2012
+%
+% This example file demonstrates the use of the 'sig-alternate.cls'
+% V2.5 LaTeX2e document class file. It is for those submitting
+% articles to ACM Conference Proceedings WHO DO NOT WISH TO
+% STRICTLY ADHERE TO THE SIGS (PUBS-BOARD-ENDORSED) STYLE.
+% The 'sig-alternate.cls' file will produce a similar-looking,
+% albeit, 'tighter' paper resulting in, invariably, fewer pages.
+%
+% ----------------------------------------------------------------------------------------------------------------
+
+%\end{document}  % This is where a 'short' article might terminate
+
+%
+% The following two commands are all you need in the
+% initial runs of your .tex file to
+% produce the bibliography for the citations in your paper.
+% You must have a proper ".bib" file
+%  and remember to run:
+% latex bibtex latex latex
+% to resolve all references
+%
+% ACM needs 'a single self-contained file'!
+%
+%APPENDICES are optional
+%\balancecolumns
+% This next section command marks the start of
+% Appendix B, and does not continue the present hierarchy
+%\balancecolumns % GM June 2007
+% That's all folks!
+\end{document}

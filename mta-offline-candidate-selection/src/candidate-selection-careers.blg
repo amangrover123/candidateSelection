@@ -1,0 +1,50 @@
+This is BibTeX, Version 0.99d (TeX Live 2016)
+Capacity: max_strings=35307, hash_size=35307, hash_prime=30011
+The top-level auxiliary file: candidate-selection-careers.aux
+The style file: abbrv.bst
+Database file #1: sigproc.bib
+Warning--empty journal in liget
+Warning--empty year in liget
+Warning--empty booktitle in sriram2014
+You've used 22 entries,
+            2118 wiz_defined-function locations,
+            618 strings with 8109 characters,
+and the built_in function-call counts, 9874 in all, are:
+= -- 990
+> -- 498
+< -- 12
++ -- 197
+- -- 174
+* -- 672
+:= -- 1526
+add.period$ -- 77
+call.type$ -- 22
+change.case$ -- 150
+chr.to.int$ -- 0
+cite$ -- 25
+duplicate$ -- 401
+empty$ -- 749
+format.name$ -- 174
+if$ -- 2161
+int.to.chr$ -- 0
+int.to.str$ -- 22
+missing$ -- 24
+newline$ -- 112
+num.names$ -- 44
+pop$ -- 205
+preamble$ -- 1
+purify$ -- 130
+quote$ -- 0
+skip$ -- 295
+stack$ -- 0
+substring$ -- 607
+swap$ -- 149
+text.length$ -- 12
+text.prefix$ -- 0
+top$ -- 0
+type$ -- 84
+warning$ -- 3
+while$ -- 88
+width$ -- 24
+write$ -- 246
+(There were 3 warnings)

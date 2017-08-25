@@ -1,0 +1,63 @@
+\section{Decision Tree Construction using Offline Replay}
+
+At LinkedIn we use a multi pass model to serve jobs through various channels like search and recommendation. The first pass is comprised of retrieving relevant candidate jobs for a user using $EQ$ . The second pass uses  $R_f(d, k)$ to rank the documents from the first pass and returns the top k . 
+
+The first pass retrieves the relevant jobs for a user by using using member's preferences in case of recommendation and $EQ$ in case of search. Member's preferences consists of information like company size, seniority, industries etc. The preferences are  represented  in the form of a Term Vector , wherein the terms are usually ids and value is the frequency of the ids. For recommendations we transform the Term Vectors to $EQ$  which usually looks something like:
+
+\lucenequery{ +(?jobSeniority:3 ?jobSeniority:4 ?jobSeniority:5) + companySize:50}
+
+The above query implies return all the member is interested in jobs that have seniority level [3,4,5] and company size 50. Currently $EQ$ constructed for recommendation can return abnormally large results from index. As a result we end up getting a lot of false positive from the first pass. Here we introduce a novel approach of learning association between the job's fields and member's fiels using a decision tree. A decision tree \TODO {Add something about  decision tree}
+
+One assumption we make is that our ranking function $R_f(d, k)$  does a good job in separating good from bad recommendation. This assumption helps us in generating unbiased labelled data. For generating training data we replayed last 30 days of queries and ran it through our offline ranking pipeline which mimics our online serving infrastructure. For each query we obtained around  $k = 4000$ job recommendations. We assigned top $1000$ recommendations as positive label and rest  as negative labels. We used member activities like applies and dismiss to assign weights to our training samples wherein both of the explicit actions got higher weights than other. As a part of training data generation in we enabled the logging for getting matched terms for each recommendation. The matched terms are transformed into association with the feature value being $1$ for the associations that caused a match and $0$ where the associations were missing. To illustrate with an example if we have two association like $jobTitle : memberTitle$ $and$ $jobSeniority : memberSeniority$ and the output from the $R_f(d, 1)$ is  one document, if the members title overlaps with job's title than the value of the feature $jobTitle : memberTitle$ would be 1.
+
+The data generated above was divided into two parts training and test. The training data was used to train a decision tree which is depicted in Figure ~\ref{fig:offline-training-process}. The test set was used to evaluate the performance of the query using replay framework. 
+
+With a learned decision tree, the problem got reduced to finding the all paths from root to leaf that leads to positive label while eliminating the paths that leads to a negative label. So we setup our problem in the following way:
+
+\begin{equation}
+min \sum_{i=1}^{n}{x_i}  \forall x_i = 0 \\
+st \sum_{i=1}^{n}{x_i}  \forall x_i = 1 > \alpha * T
+0 < \alpha < 1
+\end{equation}
+
+Here $x_i$ are labels which can be either be positive or negative and $T$ is the total number of positives in our training set. $\alpha$ is a tuning parameter.
+
+The goal of our approach is to  minimizes the number of negatives such that we maintain $\alpha * T$ positives.  We start by doing depth first search on the tree where we visit right subtree first and then the left subtree. The assumption is in our case as we move from right to left we loose positives and gain negatives. As we encounter leaf nodes, we keep on adding the number of positive sample to a global count of total positive samples.  As soon as global count of total applies exceeds the $\alpha * T$ we exit the depth first search.  We evaluate the difference between total positives samples collected and  $\alpha * T$ and if the difference is less than parameter $\delta$, we stop here and return the clauses, else we retrain our decision tree with  $h + 1$. 
+
+After the depth first search is completed we have the relevant clauses . We convert the clauses into a  WAND query where weights assigned to each association, is governed by how impure the node was. Gini impurity is one of the quantitive measure that captures the impurity of the node. A value close to zero means this node does a perfect job in splitting positives from negatives and vice a versa for value close to 1. A path starting from root to leaf is called a clause here and each clause is formed from different association eieeccgcetugnbvnucuffegdgvjljkckjhlklgjerctb
+  After the query construction logic was formed the total weight assigned to each of the clauses were tuned using Offline replay on the test set. 
+
+\begin{algorithm}
+\caption{Query Generation}\label{euclid}
+\begin{algorithmic}[1]
+\Procedure{MyProcedure}{}
+\State $\textit{DT} \gets \textit{train}(h)$
+\State $totalPositives \gets \textit{0}$
+\BState \emph{DFS}(DT,h,clauses):
+\If {$DT ==  \textit{null}$} \Return 
+\EndIf
+\If {$DT == \textit{leaf}$}
+\State $totalPositives \gets totalPositives + DT.positives$.
+\If {$totalPositives ==  \textit{$\alpha$*totalPositives}$} 
+\break
+\EndIf
+\State $i \gets i-1$.
+\State \textbf{goto} \emph{loop}.
+\State \textbf{close};
+\EndIf
+\State $j \gets \textit{patlen}$
+\BState \emph{loop}:
+\State \textit{DFS(DT,h)}
+\If {$\textit{totalFound} - \textit{$\alpha$*totalPositives} < \textit{$\delta$}$} 
+\State \textit{return}
+\State \textbf{close};
+\EndIf
+\State \textit{DT = train($t_1$....$t_n$, h + 1)}
+\State \textbf{goto} \emph{loop}.
+\State $i \gets i+\max(\textit{delta}_1(\textit{string}(i)),\textit{delta}_2(j))$.
+\State \textbf{goto} \emph{top}.
+\EndProcedure
+\end{algorithmic}
+\end{algorithm}
+
+

@@ -1,0 +1,35 @@
+\contentsline {section}{\numberline {1}Introduction}{3}{section.1}
+\contentsline {section}{\numberline {2}User's guide}{3}{section.2}
+\contentsline {subsection}{\numberline {2.1}Installation}{3}{subsection.2.1}
+\contentsline {subsection}{\numberline {2.2}Invocation and options}{5}{subsection.2.2}
+\contentsline {subsection}{\numberline {2.3}Topmatter commands}{7}{subsection.2.3}
+\contentsline {subsection}{\numberline {2.4}Algorithms}{15}{subsection.2.4}
+\contentsline {subsection}{\numberline {2.5}Figures and tables}{16}{subsection.2.5}
+\contentsline {subsection}{\numberline {2.6}Theorems}{17}{subsection.2.6}
+\contentsline {subsection}{\numberline {2.7}Online-only and offline-only material}{17}{subsection.2.7}
+\contentsline {subsection}{\numberline {2.8}Note about anonymous mode}{18}{subsection.2.8}
+\contentsline {subsection}{\numberline {2.9}Acknowledgments}{18}{subsection.2.9}
+\contentsline {subsection}{\numberline {2.10}Bibliography}{19}{subsection.2.10}
+\contentsline {subsection}{\numberline {2.11}Colors}{21}{subsection.2.11}
+\contentsline {subsection}{\numberline {2.12}Other notable packages and typographic remarks}{21}{subsection.2.12}
+\contentsline {section}{\numberline {3}Implementation}{23}{section.3}
+\contentsline {subsection}{\numberline {3.1}Identification}{23}{subsection.3.1}
+\contentsline {subsection}{\numberline {3.2}Options}{23}{subsection.3.2}
+\contentsline {subsection}{\numberline {3.3}Setting switches}{25}{subsection.3.3}
+\contentsline {subsection}{\numberline {3.4}Loading base class and package}{26}{subsection.3.4}
+\contentsline {subsection}{\numberline {3.5}Paper size and paragraphing}{32}{subsection.3.5}
+\contentsline {subsection}{\numberline {3.6}Fonts}{35}{subsection.3.6}
+\contentsline {subsection}{\numberline {3.7}Floats}{36}{subsection.3.7}
+\contentsline {subsection}{\numberline {3.8}Lists}{38}{subsection.3.8}
+\contentsline {subsection}{\numberline {3.9}Top matter data}{38}{subsection.3.9}
+\contentsline {subsection}{\numberline {3.10}Concepts system}{49}{subsection.3.10}
+\contentsline {subsection}{\numberline {3.11}Copyright system}{50}{subsection.3.11}
+\contentsline {subsection}{\numberline {3.12}Typesetting top matter}{54}{subsection.3.12}
+\contentsline {subsection}{\numberline {3.13}Headers and Footers}{67}{subsection.3.13}
+\contentsline {subsection}{\numberline {3.14}Sectioning}{71}{subsection.3.14}
+\contentsline {subsection}{\numberline {3.15}TOC Lists}{73}{subsection.3.15}
+\contentsline {subsection}{\numberline {3.16}Theorems}{73}{subsection.3.16}
+\contentsline {subsection}{\numberline {3.17}Acknowledgments}{76}{subsection.3.17}
+\contentsline {subsection}{\numberline {3.18}Conditional typesetting}{76}{subsection.3.18}
+\contentsline {subsection}{\numberline {3.19}Additional bibliography commands}{76}{subsection.3.19}
+\contentsline {subsection}{\numberline {3.20}End of Class}{77}{subsection.3.20}
